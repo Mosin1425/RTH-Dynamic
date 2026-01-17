@@ -96,7 +96,7 @@ const GalleryPage = () => {
       <div
         className="relative h-[220px] sm:h-[300px] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/assets/photos9.jpg')",
+          backgroundImage: "url('/assets/todo1.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -161,7 +161,21 @@ const GalleryPage = () => {
                   draggable={false}
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                {/* CTA */}
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-end p-3">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const msg = encodeURIComponent(
+                        `I want this setup from your gallery.\nImage: ${img.url}`
+                      );
+                      window.open(`https://wa.me/919636798937?text=${msg}`, "_blank");
+                    }}
+                    className="w-full bg-[#5a9b7f] text-white text-sm py-2 rounded-lg"
+                  >
+                    I want this setup
+                  </button>
+                </div>
 
                 {isAdmin && (
                   <button
@@ -211,24 +225,15 @@ const GalleryPage = () => {
                 draggable={false}
               />
 
-              <button
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-white"
-                onClick={(e) => { e.stopPropagation(); prev(); }}
-              >
+              <button className="absolute left-4 top-1/2 -translate-y-1/2 text-white" onClick={(e) => { e.stopPropagation(); prev(); }}>
                 <ChevronLeft size={36} />
               </button>
 
-              <button
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white"
-                onClick={(e) => { e.stopPropagation(); next(); }}
-              >
+              <button className="absolute right-4 top-1/2 -translate-y-1/2 text-white" onClick={(e) => { e.stopPropagation(); next(); }}>
                 <ChevronRight size={36} />
               </button>
 
-              <button
-                className="absolute top-4 right-4 text-white"
-                onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}
-              >
+              <button className="absolute top-4 right-4 text-white" onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}>
                 <X size={28} />
               </button>
             </div>

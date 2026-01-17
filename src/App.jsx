@@ -11,6 +11,7 @@ import GalleryPage from '@/pages/GalleryPage';
 import ContactPage from '@/pages/ContactPage';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
+import WhatsAppFloat from '@/components/WhatsAppFloat';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -50,6 +51,9 @@ function AppContent() {
         </main>
         <Footer />
         <Toaster />
+
+        {/* Floating WhatsApp Button */}
+        <WhatsAppFloat />
       </div>
     </>
   );

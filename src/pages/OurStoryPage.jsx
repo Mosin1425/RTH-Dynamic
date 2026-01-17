@@ -23,7 +23,7 @@ const OurStoryPage = () => {
             <div className="space-y-6 text-gray-600 text-lg leading-loose">
                <p>
                   <span className="text-6xl float-left mr-4 mt-[-10px] font-serif text-yellow-500">R</span>
-                  ajasthan Tent House began in 1999 with a simple yet ambitious vision: to transform the landscape of event management in Bhilwara. What started as a modest tent rental service with a handful of employees has, over the last two decades, blossomed into one of Rajasthan's premier event management companies.
+                  ajasthan Tent House began in 1989 with a simple yet ambitious vision: to transform the landscape of event management in Bhilwara. What started as a modest tent rental service with a handful of employees has, over the last two decades, blossomed into one of Rajasthan's premier event management companies.
                </p>
                <p>
                   Our founder recognized early on that clients didn't just want tables and chairs; they wanted an atmosphere. They wanted to walk into a venue and feel transported. This realization shifted our focus from mere logistics to holistic event design. We began investing in high-quality fabrics, intricate lighting systems, and training our staff in hospitality and design.

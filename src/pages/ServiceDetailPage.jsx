@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, Plus, Trash2, X, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 
-const API_BASE = "https://testkd.rajasthantenthouse.com/api";
+const API_BASE = "https://testkd.rajasthanthouse.com/api";
 const ADMIN_TOKEN = "rth-secure-2026";
 
 const Skeleton = () => (
@@ -113,12 +113,31 @@ const ServiceDetailPage = () => {
         </div>
       </div>
 
-
       <div className="container mx-auto px-3 sm:px-4 mt-5">
         <div className="bg-white p-5 sm:p-8 rounded-2xl shadow mb-5">
           <p className="text-gray-700 text-sm sm:text-lg leading-relaxed">
             {service.longDescription}
           </p>
+        </div>
+
+        {/* WhatsApp Quote Card */}
+        <div className="bg-gradient-to-r from-[#5a9b7f] to-[#4a826a] text-white rounded-2xl p-5 mb-6">
+          <h3 className="text-lg font-bold mb-2">Want this setup for your event?</h3>
+          <p className="text-sm mb-4 opacity-90">
+            Get an instant quote on WhatsApp with one tap.
+          </p>
+
+          <Button
+            onClick={() => {
+              const msg = encodeURIComponent(
+                `I want a quote for "${service.title}". Please contact me.`
+              );
+              window.open(`https://wa.me/919636798937?text=${msg}`, "_blank");
+            }}
+            className="w-full bg-white text-[#5a9b7f] font-semibold py-4"
+          >
+            Get Instant Quote on WhatsApp
+          </Button>
         </div>
 
         <div className="flex justify-between items-center mb-4">
@@ -159,8 +178,9 @@ const ServiceDetailPage = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 onClick={() => setSelected(i)}
-                className={`relative overflow-hidden rounded-xl shadow cursor-pointer group ${i % 5 === 0 ? 'sm:col-span-2 sm:row-span-2' : ''
-                  }`}
+                className={`relative overflow-hidden rounded-xl shadow cursor-pointer group ${
+                  i % 5 === 0 ? 'sm:col-span-2 sm:row-span-2' : ''
+                }`}
               >
                 <img
                   src={img.url}
@@ -224,24 +244,15 @@ const ServiceDetailPage = () => {
                 draggable={false}
               />
 
-              <button
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-white"
-                onClick={(e) => { e.stopPropagation(); prev(); }}
-              >
+              <button className="absolute left-4 top-1/2 -translate-y-1/2 text-white" onClick={(e) => { e.stopPropagation(); prev(); }}>
                 <ChevronLeft size={36} />
               </button>
 
-              <button
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white"
-                onClick={(e) => { e.stopPropagation(); next(); }}
-              >
+              <button className="absolute right-4 top-1/2 -translate-y-1/2 text-white" onClick={(e) => { e.stopPropagation(); next(); }}>
                 <ChevronRight size={36} />
               </button>
 
-              <button
-                className="absolute top-4 right-4 text-white"
-                onClick={(e) => { e.stopPropagation(); setSelected(null); }}
-              >
+              <button className="absolute top-4 right-4 text-white" onClick={(e) => { e.stopPropagation(); setSelected(null); }}>
                 <X size={28} />
               </button>
             </div>

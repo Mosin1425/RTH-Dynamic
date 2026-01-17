@@ -6,10 +6,10 @@ import Logo from './Logo';
 
 const Footer = () => {
   const socialLinks = [
-    { icon: Instagram, label: 'Instagram', href: '#', color: 'hover:text-pink-400' },
-    { icon: Youtube, label: 'YouTube', href: '#', color: 'hover:text-red-400' },
-    { icon: Facebook, label: 'Facebook', href: '#', color: 'hover:text-blue-400' },
-    { icon: Mail, label: 'Email', href: 'mailto:info@rajasthantenthouse.com', color: 'hover:text-yellow-400' }
+    { icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/rajasthan_tent_asind/profilecard/?igsh=cnJqNHN2bjkyZnRw', color: 'hover:text-pink-400' },
+    { icon: Youtube, label: 'YouTube', href: 'https://www.youtube.com/watch?v=VpKXy1vbbpQ&t=8s', color: 'hover:text-red-400' },
+    { icon: Facebook, label: 'Facebook', href: 'https://www.facebook.com/share/QYNbMibhfoPGrX2i/?mibextid=qi2Omg', color: 'hover:text-blue-400' },
+    { icon: Mail, label: 'Email', href: 'mailto:events@rajasthantenthouse.com', color: 'hover:text-yellow-400' }
   ];
 
   const quickLinks = [
@@ -43,7 +43,7 @@ const Footer = () => {
             </Link>
 
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              Creating unforgettable moments and exceptional celebrations since 1999.
+              Creating unforgettable moments and exceptional celebrations since 1989.
             </p>
 
             <div className="flex gap-3">
@@ -108,17 +108,17 @@ const Footer = () => {
 
             <div className="flex items-start gap-2 text-sm text-gray-400">
               <MapPin className="w-4 h-4 mt-0.5" />
-              <p>Main Market, Bhilwara<br />Rajasthan - 311001</p>
+              <p>Uperly Haveli, Gread Road Asind, Bhilwara <br />Rajasthan (311301)</p>
             </div>
 
             <div className="flex items-center gap-2 text-sm text-gray-400">
               <Phone className="w-4 h-4" />
-              <p>+91 98765 43210</p>
+              <p>+91 63500 89531</p>
             </div>
 
             <div className="flex items-center gap-2 text-sm text-gray-400">
               <Mail className="w-4 h-4" />
-              <p>info@rajasthantenthouse.com</p>
+              <p>events@rajasthantenthouse.com</p>
             </div>
           </motion.div>
         </div>

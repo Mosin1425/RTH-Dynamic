@@ -45,7 +45,7 @@ const ContactPage = () => {
        <div className="relative h-[50vh] min-h-[400px]">
           <div className="absolute inset-0">
              <img 
-                src="https://images.unsplash.com/photo-1520854221256-17451cc330e7?auto=format&fit=crop&q=80" 
+                src="public/assets/006-vmake.jpg" 
                 alt="Contact Us" 
                 className="w-full h-full object-cover"
              />
@@ -79,8 +79,8 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-800 mb-1">Phone</h4>
-                    <p className="text-gray-600 hover:text-[#5a9b7f] transition-colors"><a href="tel:+919876543210">+91 98765 43210</a></p>
-                    <p className="text-gray-600 hover:text-[#5a9b7f] transition-colors"><a href="tel:+918765432109">+91 87654 32109</a></p>
+                    <p className="text-gray-600 hover:text-[#5a9b7f] transition-colors"><a href="tel:+919876543210">+91 96367 98937</a></p>
+                    <p className="text-gray-600 hover:text-[#5a9b7f] transition-colors"><a href="tel:+918765432109">+91 96367 98937</a></p>
                   </div>
                 </div>
 
@@ -90,7 +90,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-800 mb-1">Email</h4>
-                    <p className="text-gray-600 hover:text-[#5a9b7f] transition-colors"><a href="mailto:info@rajasthantenthouse.com">info@rajasthantenthouse.com</a></p>
+                    <p className="text-gray-600 hover:text-[#5a9b7f] transition-colors"><a href="mailto:events@rajasthantenthouse.com">events@rajasthantenthouse.com</a></p>
                   </div>
                 </div>
 
@@ -100,7 +100,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-800 mb-1">Office Location</h4>
-                    <p className="text-gray-600">Main Market, Bhilwara<br />Rajasthan, India - 311001</p>
+                    <p className="text-gray-600">Uperly Haveli, Gread Road Asind, Bhilwara <br />Rajasthan (311301)</p>
                   </div>
                 </div>
 
@@ -110,8 +110,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-800 mb-1">Working Hours</h4>
-                    <p className="text-gray-600">Mon - Sat: 9:00 AM - 8:00 PM</p>
-                    <p className="text-gray-600">Sun: 10:00 AM - 6:00 PM</p>
+                    <p className="text-gray-600">24/7</p>
                   </div>
                 </div>
               </div>
