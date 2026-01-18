@@ -6,10 +6,10 @@ import Logo from './Logo';
 
 const Footer = () => {
   const socialLinks = [
-    { icon: Instagram, label: 'Instagram', href: '#', color: 'hover:text-pink-400' },
-    { icon: Youtube, label: 'YouTube', href: '#', color: 'hover:text-red-400' },
-    { icon: Facebook, label: 'Facebook', href: '#', color: 'hover:text-blue-400' },
-    { icon: Mail, label: 'Email', href: 'mailto:info@rajasthantenthouse.com', color: 'hover:text-yellow-400' }
+    { icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/rajasthan_tent_asind/profilecard/?igsh=cnJqNHN2bjkyZnRw', color: 'hover:text-pink-400' },
+    { icon: Youtube, label: 'YouTube', href: 'https://www.youtube.com/watch?v=VpKXy1vbbpQ&t=8s', color: 'hover:text-red-400' },
+    { icon: Facebook, label: 'Facebook', href: 'https://www.facebook.com/share/QYNbMibhfoPGrX2i/?mibextid=qi2Omg', color: 'hover:text-blue-400' },
+    { icon: Mail, label: 'Email', href: 'mailto:events@rajasthantenthouse.com', color: 'hover:text-yellow-400' }
   ];
 
   const quickLinks = [
@@ -22,9 +22,9 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-white border-t border-gray-800">
-      <div className="container mx-auto px-4 py-12 sm:py-16">
+      <div className="container mx-auto px-4 py-14 sm:py-18">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          
+
           {/* Brand */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -43,7 +43,7 @@ const Footer = () => {
             </Link>
 
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              Creating unforgettable moments and exceptional celebrations since 1999.
+              Rajasthan Tent House is a leading event management and tent house company in Bhilwara, Rajasthan, specializing in weddings, decorations, DJ setups, and complete event planning across Rajasthan.
             </p>
 
             <div className="flex gap-3">
@@ -89,11 +89,11 @@ const Footer = () => {
           >
             <h3 className="text-base font-bold mb-4 text-[#5a9b7f]">Services</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/services/wedding-events" className="text-gray-400 hover:text-white">Wedding Events</Link></li>
-              <li><Link to="/services/haldi-ceremony" className="text-gray-400 hover:text-white">Haldi Ceremony</Link></li>
-              <li><Link to="/services/ring-ceremony" className="text-gray-400 hover:text-white">Ring Ceremony</Link></li>
-              <li><Link to="/services/birthday-celebrations" className="text-gray-400 hover:text-white">Birthday Parties</Link></li>
-              <li><Link to="/services/dj-parties" className="text-gray-400 hover:text-white">DJ Night Parties</Link></li>
+              <li><Link to="/services/wedding-events" className="text-gray-400 hover:text-white">Wedding Decoration in Bhilwara</Link></li>
+              <li><Link to="/services/haldi-ceremony" className="text-gray-400 hover:text-white">Haldi Ceremony Setup</Link></li>
+              <li><Link to="/services/ring-ceremony" className="text-gray-400 hover:text-white">Ring Ceremony Decoration</Link></li>
+              <li><Link to="/services/birthday-celebrations" className="text-gray-400 hover:text-white">Birthday Party Decoration</Link></li>
+              <li><Link to="/services/dj-parties" className="text-gray-400 hover:text-white">DJ Setup for Weddings</Link></li>
             </ul>
           </motion.div>
 
@@ -108,19 +108,37 @@ const Footer = () => {
 
             <div className="flex items-start gap-2 text-sm text-gray-400">
               <MapPin className="w-4 h-4 mt-0.5" />
-              <p>Main Market, Bhilwara<br />Rajasthan - 311001</p>
+              <p>Uperly Haveli, Gread Road Asind, Bhilwara<br />Rajasthan (311301)</p>
             </div>
 
             <div className="flex items-center gap-2 text-sm text-gray-400">
               <Phone className="w-4 h-4" />
-              <p>+91 98765 43210</p>
+              <p>+91 96367 98937</p>
             </div>
 
             <div className="flex items-center gap-2 text-sm text-gray-400">
               <Mail className="w-4 h-4" />
-              <p>info@rajasthantenthouse.com</p>
+              <p>events@rajasthantenthouse.com</p>
             </div>
           </motion.div>
+        </div>
+
+        {/* Locations We Serve */}
+        <div className="mt-14 pt-10 border-t border-gray-800">
+          <h4 className="text-lg font-semibold text-[#5a9b7f] mb-3">
+            Locations We Serve
+          </h4>
+          <p className="text-sm text-gray-400 leading-relaxed">
+            Bhilwara, Asind, Mandal, Shahpura, Chittorgarh, Ajmer, Udaipur, Jaipur and across Rajasthan.
+            We provide premium wedding decoration, tent house services, event planning, DJ setups, stage décor,
+            and complete event management throughout Rajasthan.
+          </p>
+
+          <p className="mt-4 text-xs text-gray-500 leading-relaxed">
+            Wedding decorator in Bhilwara · Tent house for marriage in Rajasthan · Event planner in Bhilwara ·
+            Best tent house in Rajasthan · Royal wedding decoration · DJ setup for weddings ·
+            Corporate event management in Rajasthan
+          </p>
         </div>
       </div>
 

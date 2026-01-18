@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Trash2, Plus, Lock, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
+import HeroSection from '@/components/HeroSection';
+import SEO from '@/components/SEO';
 
-const API_BASE = "https://testkd.rajasthantenthouse.com/api";
+const API_BASE = "https://rajasthantenthouse.com/api";
 const ADMIN_TOKEN = "rth-secure-2026";
 
 const Skeleton = () => (
@@ -36,7 +38,7 @@ const GalleryPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (loginData.username === 'admin' && loginData.password === 'password123') {
+    if (loginData.username === 'admin' && loginData.password === 'Rajasthan@1122') {
       setIsAdmin(true);
       localStorage.setItem("isAdmin", "true");
       setIsLoginOpen(false);
@@ -93,26 +95,29 @@ const GalleryPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <div
-        className="relative h-[220px] sm:h-[300px] flex items-center justify-center text-white"
-        style={{
-          backgroundImage: "url('/assets/photos9.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 bg-black/40" />
-        <h1 className="relative z-10 text-2xl sm:text-4xl font-bold">Gallery</h1>
-      </div>
 
-      <div className="container mx-auto px-3 sm:px-4 py-6">
-        <div className="flex justify-between items-center mb-4">
+      <SEO
+        title="Event Gallery – Wedding & Event Setups in Bhilwara"
+        description="Explore our event gallery featuring real wedding and event setups by Rajasthan Tent House in Bhilwara. See mandaps, decorations, haldi, DJ nights and more."
+        url="https://rajasthantenthouse.com/gallery"
+      />
+
+      {/* HERO */}
+      <HeroSection
+        title="Our Event Gallery"
+        subtitle="Real Moments. Real Setups. Real Celebrations."
+        image="/assets/006-vmake.jpg"
+      />
+
+      <div className="container mx-auto px-3 sm:px-4 py-12">
+
+        <div className="flex justify-between items-center mb-6">
           <h2 className="text-base sm:text-2xl font-bold">Photos</h2>
 
           {isAdmin ? (
             <div className="flex gap-2">
               <input type="file" id="g-up" className="hidden" onChange={handleFileUpload} />
-              <label htmlFor="g-up" className="flex items-center gap-1 bg-[#5a9b7f] text-white px-3 py-2 rounded-lg text-sm">
+              <label htmlFor="g-up" className="flex items-center gap-1 bg-[#5a9b7f] text-white px-3 py-2 rounded-lg text-sm cursor-pointer">
                 <Plus size={14} /> Add
               </label>
               <Button
@@ -157,11 +162,26 @@ const GalleryPage = () => {
                 <img
                   src={img.url}
                   loading="lazy"
+                  alt={`Rajasthan Tent House Event Setup ${i + 1}`}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   draggable={false}
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                {/* CTA */}
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-end p-3">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const msg = encodeURIComponent(
+                        `I want this setup from your gallery.\nImage: ${img.url}`
+                      );
+                      window.open(`https://wa.me/919636798937?text=${msg}`, "_blank");
+                    }}
+                    className="w-full bg-[#5a9b7f] text-white text-sm py-2 rounded-lg"
+                  >
+                    I want this setup
+                  </button>
+                </div>
 
                 {isAdmin && (
                   <button
@@ -182,13 +202,24 @@ const GalleryPage = () => {
           <div className="bg-white rounded-lg p-6 w-full max-w-sm">
             <h3 className="text-lg font-bold mb-4">Admin Login</h3>
             <form onSubmit={handleLogin} className="space-y-3">
-              <input className="w-full border p-2 rounded" placeholder="Username"
-                onChange={e => setLoginData({ ...loginData, username: e.target.value })} />
-              <input className="w-full border p-2 rounded" type="password" placeholder="Password"
-                onChange={e => setLoginData({ ...loginData, password: e.target.value })} />
+              <input
+                className="w-full border p-2 rounded"
+                placeholder="Username"
+                onChange={e => setLoginData({ ...loginData, username: e.target.value })}
+              />
+              <input
+                className="w-full border p-2 rounded"
+                type="password"
+                placeholder="Password"
+                onChange={e => setLoginData({ ...loginData, password: e.target.value })}
+              />
               <div className="flex justify-end gap-2">
-                <Button type="button" variant="ghost" onClick={() => setIsLoginOpen(false)}>Cancel</Button>
-                <Button type="submit" className="bg-[#5a9b7f] text-white">Login</Button>
+                <Button type="button" variant="ghost" onClick={() => setIsLoginOpen(false)}>
+                  Cancel
+                </Button>
+                <Button type="submit" className="bg-[#5a9b7f] text-white">
+                  Login
+                </Button>
               </div>
             </form>
           </div>

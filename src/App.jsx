@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import Navbar from '@/components/Navbar';
 import Home from '@/pages/Home';
 import WhyChooseUsPage from '@/pages/WhyChooseUsPage';
@@ -8,9 +7,10 @@ import OurStoryPage from '@/pages/OurStoryPage';
 import AboutPage from '@/pages/AboutPage';
 import ServiceDetailPage from '@/pages/ServiceDetailPage';
 import GalleryPage from '@/pages/GalleryPage';
-import ContactPage from '@/pages/ContactPage';
+import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
+import WhatsAppFloat from '@/components/WhatsAppFloat';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -27,14 +27,6 @@ function AppContent() {
     <>
       <ScrollToTop />
 
-      <Helmet>
-        <title>Rajasthan Tent House - Premier Event Management</title>
-        <meta
-          name="description"
-          content="Rajasthan Tent House - Creating unforgettable moments with extraordinary event management services."
-        />
-      </Helmet>
-
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navbar />
         <main className="flex-grow pt-24">
@@ -45,11 +37,14 @@ function AppContent() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services/:id" element={<ServiceDetailPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
         <Footer />
         <Toaster />
+
+        {/* Floating WhatsApp Button */}
+        <WhatsAppFloat />
       </div>
     </>
   );
