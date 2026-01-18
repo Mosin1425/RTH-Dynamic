@@ -34,7 +34,7 @@ const AboutPage = () => {
       <HeroSection
         title="About Rajasthan Tent House"
         subtitle="Dedication, Creativity & Excellence"
-        image="/assets/001.jpg"
+        image="/assets/003-vmake.jpg"
       />
 
       <div className="container mx-auto px-4 py-20">

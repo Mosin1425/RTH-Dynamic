@@ -8,7 +8,7 @@ import { toast } from '@/components/ui/use-toast';
 import HeroSection from '@/components/HeroSection';
 import SEO from '@/components/SEO';
 
-const API_BASE = "https://testkd.rajasthantenthouse.com/api";
+const API_BASE = "https://rajasthantenthouse.com/api";
 const ADMIN_TOKEN = "rth-secure-2026";
 
 const stripImages = [
@@ -55,7 +55,7 @@ const ServiceDetailPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (loginData.username === 'admin' && loginData.password === 'password123') {
+    if (loginData.username === 'admin' && loginData.password === 'Rajasthan@1122') {
       setIsAdmin(true);
       localStorage.setItem("isAdmin", "true");
       setIsLoginOpen(false);
@@ -123,7 +123,7 @@ const ServiceDetailPage = () => {
       <HeroSection
         title={service.title}
         subtitle="Premium setups crafted for your special moments"
-        image="/assets/001.jpg"
+        image="/assets/AI_01.png"
       />
 
       <div className="container mx-auto px-3 sm:px-4 py-10">

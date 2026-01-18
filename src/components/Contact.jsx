@@ -52,7 +52,7 @@ ${formData.message}
       <HeroSection
         title="Contact Rajasthan Tent House"
         subtitle="We’re Ready to Work with You. Let’s Plan Something Beautiful."
-        image="/assets/001.jpg"
+        image="/assets/005-vmake.jpg"
       />
 
       <section className="py-20 bg-gradient-to-br from-orange-50 via-white to-rose-50">

@@ -83,7 +83,7 @@ const WhyChooseUsPage = () => {
       <HeroSection
         title="Why Choose Rajasthan Tent House"
         subtitle="The Difference You Can See. The Quality You Can Trust."
-        image="/assets/001.jpg"
+        image="/assets/002-vmake.jpg"
       />
 
       <div className="container mx-auto px-4 py-20">
