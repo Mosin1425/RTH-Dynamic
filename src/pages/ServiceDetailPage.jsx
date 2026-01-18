@@ -5,9 +5,22 @@ import { servicesData } from '@/constants/data';
 import { ChevronLeft, ChevronRight, Plus, Trash2, X, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
+import HeroSection from '@/components/HeroSection';
+import SEO from '@/components/SEO';
 
-const API_BASE = "https://testkd.rajasthanthouse.com/api";
+const API_BASE = "https://testkd.rajasthantenthouse.com/api";
 const ADMIN_TOKEN = "rth-secure-2026";
+
+const stripImages = [
+  "/assets/todo1.png",
+  "/assets/todo2.jpg",
+  "/assets/todo3.jpg",
+  "/assets/todo4.jpg",
+  "/assets/todo5.jpg",
+  "/assets/todo6.jpg",
+  "/assets/todo7.jpg",
+  "/assets/todo8.jpg",
+];
 
 const Skeleton = () => (
   <div className="rounded-xl bg-gray-200 animate-pulse w-full h-full" />
@@ -98,32 +111,33 @@ const ServiceDetailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
-      <div
-        className="relative h-[240px] sm:h-[320px] flex items-center text-white"
-        style={{
-          backgroundImage: "url('/assets/001.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 bg-black/45" />
-        <div className="relative z-10 container mx-auto px-4">
-          <h1 className="text-xl sm:text-4xl font-bold">{service.title}</h1>
-        </div>
-      </div>
+    <div className="min-h-screen bg-white pb-24">
 
-      <div className="container mx-auto px-3 sm:px-4 mt-5">
-        <div className="bg-white p-5 sm:p-8 rounded-2xl shadow mb-5">
+      <SEO
+        title={`${service.title} in Bhilwara | Rajasthan Tent House`}
+        description={`${service.title} services by Rajasthan Tent House in Bhilwara. Premium setups, professional planning, and complete event execution across Rajasthan.`}
+        url={`https://rajasthantenthouse.com/services/${id}`}
+      />
+
+      {/* HERO */}
+      <HeroSection
+        title={service.title}
+        subtitle="Premium setups crafted for your special moments"
+        image="/assets/001.jpg"
+      />
+
+      <div className="container mx-auto px-3 sm:px-4 py-10">
+
+        <div className="bg-gray-50 p-6 sm:p-10 rounded-3xl shadow mb-10">
           <p className="text-gray-700 text-sm sm:text-lg leading-relaxed">
             {service.longDescription}
           </p>
         </div>
 
-        {/* WhatsApp Quote Card */}
-        <div className="bg-gradient-to-r from-[#5a9b7f] to-[#4a826a] text-white rounded-2xl p-5 mb-6">
-          <h3 className="text-lg font-bold mb-2">Want this setup for your event?</h3>
-          <p className="text-sm mb-4 opacity-90">
+        {/* WhatsApp Quote */}
+        <div className="bg-gradient-to-r from-[#5a9b7f] to-[#4a826a] text-white rounded-3xl p-6 sm:p-8 mb-12">
+          <h3 className="text-xl font-bold mb-2">Want this setup for your event?</h3>
+          <p className="text-sm mb-5 opacity-90">
             Get an instant quote on WhatsApp with one tap.
           </p>
 
@@ -134,19 +148,19 @@ const ServiceDetailPage = () => {
               );
               window.open(`https://wa.me/919636798937?text=${msg}`, "_blank");
             }}
-            className="w-full bg-white text-[#5a9b7f] font-semibold py-4"
+            className="w-full bg-white text-[#5a9b7f] font-semibold py-5 text-lg rounded-full"
           >
             Get Instant Quote on WhatsApp
           </Button>
         </div>
 
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-base sm:text-2xl font-bold">Photos</h2>
+        <div className="flex justify-between items-center mb-5">
+          <h2 className="text-lg sm:text-2xl font-bold">Photos</h2>
 
           {isAdmin ? (
             <>
               <input type="file" id="s-up" className="hidden" accept="image/*" onChange={handleFileUpload} />
-              <label htmlFor="s-up" className="flex items-center gap-1 px-3 py-2 bg-[#5a9b7f] text-white rounded-lg text-sm">
+              <label htmlFor="s-up" className="flex items-center gap-1 px-3 py-2 bg-[#5a9b7f] text-white rounded-lg text-sm cursor-pointer">
                 <Plus size={14} /> Add
               </label>
             </>
@@ -185,6 +199,7 @@ const ServiceDetailPage = () => {
                 <img
                   src={img.url}
                   loading="lazy"
+                  alt={`${service.title} Setup ${i + 1} – Rajasthan Tent House`}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
@@ -201,33 +216,30 @@ const ServiceDetailPage = () => {
           </div>
         )}
 
-        <div className="mt-8">
+        <div className="mt-12">
           <Link to="/contact">
-            <Button className="w-full bg-[#5a9b7f] text-white py-5 text-lg">
+            <Button className="w-full bg-[#5a9b7f] text-white py-6 text-lg rounded-full">
               Request Quote
             </Button>
           </Link>
         </div>
       </div>
 
-      {isLoginOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg p-6 w-full max-w-sm">
-            <h3 className="text-lg font-bold mb-4">Admin Login</h3>
-            <form onSubmit={handleLogin} className="space-y-3">
-              <input className="w-full border p-2 rounded" placeholder="Username"
-                onChange={e => setLoginData({ ...loginData, username: e.target.value })} />
-              <input className="w-full border p-2 rounded" type="password" placeholder="Password"
-                onChange={e => setLoginData({ ...loginData, password: e.target.value })} />
-              <div className="flex justify-end gap-2">
-                <Button type="button" variant="ghost" onClick={() => setIsLoginOpen(false)}>Cancel</Button>
-                <Button type="submit" className="bg-[#5a9b7f] text-white">Login</Button>
-              </div>
-            </form>
-          </div>
+      {/* 8 PHOTO GRID */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {stripImages.map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              className="w-full h-36 sm:h-48 object-cover rounded-lg shadow"
+              alt={`Event Setup Showcase ${i + 1}`}
+            />
+          ))}
         </div>
-      )}
+      </section>
 
+      {/* Lightbox */}
       <AnimatePresence>
         {selected !== null && images[selected] && (
           <motion.div

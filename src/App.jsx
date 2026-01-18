@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import Navbar from '@/components/Navbar';
 import Home from '@/pages/Home';
 import WhyChooseUsPage from '@/pages/WhyChooseUsPage';
@@ -27,14 +26,6 @@ function AppContent() {
   return (
     <>
       <ScrollToTop />
-
-      <Helmet>
-        <title>Rajasthan Tent House - Premier Event Management</title>
-        <meta
-          name="description"
-          content="Rajasthan Tent House - Creating unforgettable moments with extraordinary event management services."
-        />
-      </Helmet>
 
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navbar />
