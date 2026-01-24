@@ -122,6 +122,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
       {/* 8 PHOTO GRID */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -135,7 +136,33 @@ const Home = () => {
           ))}
         </div>
       </section>
-          <SEOFAQ />
+
+      {/* BUILT BY MOSIN – LEAD SECTION */}
+      <section className="py-20 bg-gradient-to-r from-[#5a9b7f] to-[#4a826a] text-white">
+        <div className="container mx-auto px-4 text-center max-w-3xl">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            Want a Website Like This for Your Business?
+          </h2>
+          <p className="text-white/90 mb-8 text-lg">
+            I design and build premium business websites like this that convert
+            visitors into customers.
+          </p>
+
+          <a
+            href="https://wa.me/919636798937?text=I%20want%20a%20website%20like%20Rajasthan%20Tent%20House"
+            target="_blank"
+            className="inline-block bg-white text-[#5a9b7f] font-semibold px-10 py-4 rounded-full text-lg shadow-xl hover:scale-105 transition"
+          >
+            Chat with Mosin on WhatsApp
+          </a>
+
+          <p className="mt-4 text-xs text-white/70">
+            Designed & developed by Mosin
+          </p>
+        </div>
+      </section>
+
+      <SEOFAQ />
     </div>
   );
 };
