@@ -1,24 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 
-const WHATSAPP = "919636798937";
+const WHATSAPP = "916350089531";
 const MESSAGE = encodeURIComponent(
   "Hi Mosin, I visited Rajasthan Tent House’s website and I want a similar website for my business."
 );
 
 const BuiltByMosin = () => {
   const [open, setOpen] = useState(false);
+  const lastTap = useRef(0);
+
+  const isTouchDevice = () =>
+    typeof window !== "undefined" &&
+    ("ontouchstart" in window || navigator.maxTouchPoints > 0);
 
   const handleClick = (e) => {
-    // On mobile: first tap just expands
-    if (!open) {
-      e.preventDefault();
-      setOpen(true);
-      return;
-    }
+    if (isTouchDevice()) {
+      const now = Date.now();
 
-    // Second tap → go to WhatsApp
-    window.open(`https://wa.me/${WHATSAPP}?text=${MESSAGE}`, "_blank");
+      // First tap → expand only
+      if (!open || now - lastTap.current > 1200) {
+        e.preventDefault();
+        setOpen(true);
+        lastTap.current = now;
+        return;
+      }
+
+      // Second tap (within 1.2s) → open WhatsApp
+      window.open(`https://wa.me/${WHATSAPP}?text=${MESSAGE}`, "_blank");
+    } else {
+      // Desktop → direct open
+      window.open(`https://wa.me/${WHATSAPP}?text=${MESSAGE}`, "_blank");
+    }
   };
 
   return (
@@ -27,7 +40,7 @@ const BuiltByMosin = () => {
       animate={{ opacity: 1, y: 0 }}
       className="
         fixed bottom-24 right-4 z-40
-        bg-white/90 backdrop-blur
+        bg-white/95 backdrop-blur
         border border-gray-200
         shadow-md rounded-full
         px-3 py-2
@@ -38,8 +51,8 @@ const BuiltByMosin = () => {
         max-w-[220px]
         cursor-pointer
       "
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={() => !isTouchDevice() && setOpen(true)}
+      onMouseLeave={() => !isTouchDevice() && setOpen(false)}
       onClick={handleClick}
     >
       <div className="leading-tight">
@@ -53,7 +66,7 @@ const BuiltByMosin = () => {
             animate={{ opacity: 1, y: 0 }}
             className="block text-[10px] text-gray-500 mt-0.5"
           >
-            Built by Mosin · Chat on WhatsApp
+            Built by Mosin · Tap again to chat
           </motion.span>
         )}
       </div>
