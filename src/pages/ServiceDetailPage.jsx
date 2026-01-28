@@ -22,8 +22,15 @@ const stripImages = [
   "/assets/todo8.jpg",
 ];
 
-const Skeleton = () => (
-  <div className="rounded-xl bg-gray-200 animate-pulse w-full h-full" />
+const BeautifulLoader = () => (
+  <div className="flex flex-col items-center justify-center py-20 text-center">
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
+      className="w-16 h-16 rounded-full border-4 border-[#5a9b7f]/30 border-t-[#5a9b7f]"
+    />
+    <p className="mt-4 text-gray-500 text-sm">Loading setups...</p>
+  </div>
 );
 
 const ServiceDetailPage = () => {
@@ -51,7 +58,9 @@ const ServiceDetailPage = () => {
       .catch(() => setLoading(false));
   }, [id, service]);
 
-  if (!service) return <div className="min-h-screen flex items-center justify-center">Not Found</div>;
+  if (!service) {
+    return <div className="min-h-screen flex items-center justify-center">Not Found</div>;
+  }
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -95,6 +104,7 @@ const ServiceDetailPage = () => {
 
     const res = await fetch(`${API_BASE}/delete_image.php`, { method: "POST", body: form });
     const data = await res.json();
+
     if (!data.error) {
       setImages(prev => prev.filter(i => i.id !== imgId));
     }
@@ -119,7 +129,6 @@ const ServiceDetailPage = () => {
         url={`https://rajasthantenthouse.com/services/${id}`}
       />
 
-      {/* HERO */}
       <HeroSection
         title={service.title}
         subtitle="Premium setups crafted for your special moments"
@@ -134,7 +143,6 @@ const ServiceDetailPage = () => {
           </p>
         </div>
 
-        {/* WhatsApp Quote */}
         <div className="bg-gradient-to-r from-[#5a9b7f] to-[#4a826a] text-white rounded-3xl p-6 sm:p-8 mb-12">
           <h3 className="text-xl font-bold mb-2">Want this setup for your event?</h3>
           <p className="text-sm mb-5 opacity-90">
@@ -172,13 +180,7 @@ const ServiceDetailPage = () => {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 auto-rows-[140px] sm:auto-rows-[180px]">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="rounded-xl overflow-hidden">
-                <Skeleton />
-              </div>
-            ))}
-          </div>
+          <BeautifulLoader />
         ) : images.length === 0 ? (
           <div className="text-center text-gray-500 py-16 text-sm sm:text-base">
             No photos yet. Log in as admin to add.
@@ -225,7 +227,6 @@ const ServiceDetailPage = () => {
         </div>
       </div>
 
-      {/* 8 PHOTO GRID */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
           {stripImages.map((src, i) => (
@@ -239,7 +240,35 @@ const ServiceDetailPage = () => {
         </div>
       </section>
 
-      {/* Lightbox */}
+      {isLoginOpen && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg p-6 w-full max-w-sm">
+            <h3 className="text-lg font-bold mb-4">Admin Login</h3>
+            <form onSubmit={handleLogin} className="space-y-3">
+              <input
+                className="w-full border p-2 rounded"
+                placeholder="Username"
+                onChange={e => setLoginData({ ...loginData, username: e.target.value })}
+              />
+              <input
+                className="w-full border p-2 rounded"
+                type="password"
+                placeholder="Password"
+                onChange={e => setLoginData({ ...loginData, password: e.target.value })}
+              />
+              <div className="flex justify-end gap-2">
+                <Button type="button" variant="ghost" onClick={() => setIsLoginOpen(false)}>
+                  Cancel
+                </Button>
+                <Button type="submit" className="bg-[#5a9b7f] text-white">
+                  Login
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       <AnimatePresence>
         {selected !== null && images[selected] && (
           <motion.div

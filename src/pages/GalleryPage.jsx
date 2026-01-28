@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trash2, Plus, Lock, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Trash2, Plus, Lock, X, ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import HeroSection from '@/components/HeroSection';
@@ -9,8 +9,15 @@ import SEO from '@/components/SEO';
 const API_BASE = "https://rajasthantenthouse.com/api";
 const ADMIN_TOKEN = "rth-secure-2026";
 
-const Skeleton = () => (
-  <div className="rounded-xl bg-gray-200 animate-pulse h-40" />
+const BeautifulLoader = () => (
+  <div className="flex flex-col items-center justify-center py-20 text-center">
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
+      className="w-16 h-16 rounded-full border-4 border-[#5a9b7f]/30 border-t-[#5a9b7f]"
+    />
+    <p className="mt-4 text-gray-500 text-sm">Loading beautiful moments...</p>
+  </div>
 );
 
 const GalleryPage = () => {
@@ -95,14 +102,12 @@ const GalleryPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-
       <SEO
         title="Event Gallery – Wedding & Event Setups in Bhilwara"
-        description="Explore our event gallery featuring real wedding and event setups by Rajasthan Tent House in Bhilwara. See mandaps, decorations, haldi, DJ nights and more."
+        description="Explore our event gallery featuring real wedding and event setups by Rajasthan Tent House in Bhilwara."
         url="https://rajasthantenthouse.com/gallery"
       />
 
-      {/* HERO */}
       <HeroSection
         title="Our Event Gallery"
         subtitle="Real Moments. Real Setups. Real Celebrations."
@@ -110,7 +115,6 @@ const GalleryPage = () => {
       />
 
       <div className="container mx-auto px-3 sm:px-4 py-12">
-
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-base sm:text-2xl font-bold">Photos</h2>
 
@@ -139,9 +143,7 @@ const GalleryPage = () => {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 auto-rows-[120px]">
-            {Array.from({ length: 10 }).map((_, i) => <Skeleton key={i} />)}
-          </div>
+          <BeautifulLoader />
         ) : images.length === 0 ? (
           <div className="text-center text-gray-500 py-16 text-sm sm:text-base">
             No photos yet. Log in as admin to add.
@@ -166,22 +168,6 @@ const GalleryPage = () => {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   draggable={false}
                 />
-
-                {/* CTA */}
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-end p-3">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const msg = encodeURIComponent(
-                        `I want this setup from your gallery.\nImage: ${img.url}`
-                      );
-                      window.open(`https://wa.me/919636798937?text=${msg}`, "_blank");
-                    }}
-                    className="w-full bg-[#5a9b7f] text-white text-sm py-2 rounded-lg"
-                  >
-                    I want this setup
-                  </button>
-                </div>
 
                 {isAdmin && (
                   <button
@@ -225,47 +211,6 @@ const GalleryPage = () => {
           </div>
         </div>
       )}
-
-      <AnimatePresence>
-        {lightboxIndex !== null && images[lightboxIndex] && (
-          <motion.div
-            className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center touch-none"
-            onTouchStart={onTouchStart}
-            onTouchEnd={onTouchEnd}
-          >
-            <div className="absolute inset-0" onClick={() => setLightboxIndex(null)} />
-
-            <div className="relative z-10">
-              <img
-                src={images[lightboxIndex].url}
-                className="max-h-[90vh] max-w-[90vw] object-contain"
-                draggable={false}
-              />
-
-              <button
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-white"
-                onClick={(e) => { e.stopPropagation(); prev(); }}
-              >
-                <ChevronLeft size={36} />
-              </button>
-
-              <button
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white"
-                onClick={(e) => { e.stopPropagation(); next(); }}
-              >
-                <ChevronRight size={36} />
-              </button>
-
-              <button
-                className="absolute top-4 right-4 text-white"
-                onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}
-              >
-                <X size={28} />
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

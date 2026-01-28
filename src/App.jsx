@@ -11,6 +11,7 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
+import BuiltByMosin from "@/components/BuiltByMosin";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -29,6 +30,10 @@ function AppContent() {
 
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navbar />
+
+        {/* Floating "Built by Mosin" Badge */}
+        <BuiltByMosin />
+
         <main className="flex-grow pt-24">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -40,6 +45,7 @@ function AppContent() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
+
         <Footer />
         <Toaster />
 
