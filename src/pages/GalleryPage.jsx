@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trash2, Plus, Lock, X, ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react';
+import { Trash2, Plus, Lock, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import HeroSection from '@/components/HeroSection';
@@ -149,23 +149,22 @@ const GalleryPage = () => {
             No photos yet. Log in as admin to add.
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 auto-rows-[120px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {images.map((img, i) => (
               <motion.div
                 key={img.id}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4 }}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -80 : 80, scale: 0.96 }}
+                whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: i * 0.05 }}
+                viewport={{ once: true, amount: 0.25 }}
                 onClick={() => setLightboxIndex(i)}
-                className={`relative overflow-hidden rounded-xl shadow-lg cursor-pointer group
-                  ${i % 7 === 0 ? 'sm:row-span-2 sm:col-span-2' : 'row-span-2'}
-                `}
+                className="relative overflow-hidden rounded-xl shadow-lg cursor-pointer group"
               >
                 <img
                   src={img.url}
                   loading="lazy"
                   alt={`Rajasthan Tent House Event Setup ${i + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-[240px] sm:h-[260px] object-cover transition-transform duration-700 group-hover:scale-105"
                   draggable={false}
                 />
 
@@ -211,6 +210,38 @@ const GalleryPage = () => {
           </div>
         </div>
       )}
+
+      <AnimatePresence>
+        {lightboxIndex !== null && images[lightboxIndex] && (
+          <motion.div
+            className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center touch-none"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            <div className="absolute inset-0" onClick={() => setLightboxIndex(null)} />
+
+            <div className="relative z-10">
+              <img
+                src={images[lightboxIndex].url}
+                className="max-h-[90vh] max-w-[90vw] object-contain"
+                draggable={false}
+              />
+
+              <button className="absolute left-4 top-1/2 -translate-y-1/2 text-white" onClick={(e) => { e.stopPropagation(); prev(); }}>
+                <ChevronLeft size={36} />
+              </button>
+
+              <button className="absolute right-4 top-1/2 -translate-y-1/2 text-white" onClick={(e) => { e.stopPropagation(); next(); }}>
+                <ChevronRight size={36} />
+              </button>
+
+              <button className="absolute top-4 right-4 text-white" onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}>
+                <X size={28} />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
