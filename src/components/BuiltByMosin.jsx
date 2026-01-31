@@ -26,7 +26,10 @@ const BuiltByMosin = () => {
         return;
       }
 
-      // Second tap (within 1.2s) → open WhatsApp
+      // Second tap → open WhatsApp
+      setOpen(false); // reset before leaving
+      lastTap.current = 0;
+
       window.open(`https://wa.me/${WHATSAPP}?text=${MESSAGE}`, "_blank");
     } else {
       // Desktop → direct open
