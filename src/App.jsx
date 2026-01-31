@@ -12,6 +12,7 @@ import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import BuiltByMosin from "@/components/BuiltByMosin";
+import AmbientSound from "@/components/AmbientSound";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -33,7 +34,8 @@ function AppContent() {
 
         {/* Floating "Built by Mosin" Badge */}
         <BuiltByMosin />
-
+        {/* Ambient sound (mounted once, available across pages) */}
+        <AmbientSound />
         <main className="flex-grow pt-24">
           <Routes>
             <Route path="/" element={<Home />} />

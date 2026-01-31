@@ -4,6 +4,7 @@ import { servicesData } from "@/constants/data";
 import HeroSection from "@/components/HeroSection";
 import SEO from "@/components/SEO";
 import SEOFAQ from "@/components/SEOFAQ";
+import PremiumShowcaseSection from "@/components/PremiumShowcaseSection";
 
 const heroImages = [
   "/assets/001.jpg",
@@ -15,6 +16,7 @@ const heroImages = [
 const ownerPhotos = [
   "/assets/owner1.jpg",
   "/assets/owner2.jpg",
+  "/assets/owner3.jpg"
 ];
 
 const stripImages = [
@@ -48,7 +50,7 @@ const Home = () => {
         images={heroImages}
         showLearnMore
       />
-
+      {/* <PremiumShowcaseSection /> */}
       {/* OWNER / LEGACY */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 text-center">
@@ -72,7 +74,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-
+      <PremiumShowcaseSection />
       {/* SERVICES */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
