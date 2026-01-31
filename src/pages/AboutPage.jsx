@@ -8,7 +8,7 @@ import SEOFAQ from "@/components/SEOFAQ";
 const ownerPhotos = [
   "/assets/owner1.jpg",
   "/assets/owner2.jpg",
-  "/assets/owner3.jpg",
+  "/assets/owner2.jpg",
 ];
 
 const stripImages = [
