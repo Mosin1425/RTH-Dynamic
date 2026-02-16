@@ -16,7 +16,7 @@ const heroImages = [
 const ownerPhotos = [
   "/assets/owner1.jpg",
   "/assets/owner2.jpg",
-  "/assets/owner2.jpg"
+  "/assets/owner3.jpg"
 ];
 
 const stripImages = [
@@ -62,19 +62,16 @@ const Home = () => {
             their most precious celebrations.
           </p>
 
-          <div className="grid grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {ownerPhotos.map((src, i) => {
-              const isLast = i === ownerPhotos.length - 1 && ownerPhotos.length % 2 === 1;
-              return (
-                <div key={i} className={isLast ? "sm:col-span-2 flex justify-center" : ""}>
-                  <img
-                    src={src}
-                    className={`${isLast ? "w-2/3 sm:w-1/2" : "w-full"} h-64 sm:h-72 object-cover rounded-2xl shadow-xl`}
-                    alt="Owner"
-                  />
-                </div>
-              );
-            })}
+          <div className="flex flex-wrap justify-center gap-6">
+            {ownerPhotos.map((src, i) => (
+              <div key={i} className="w-full sm:w-1/2 lg:w-1/3 flex justify-center">
+                <img
+                  src={src}
+                  className="w-full max-w-xs h-64 sm:h-72 object-cover rounded-2xl shadow-xl"
+                  alt={`Rajasthan Tent House Owner ${i + 1}`}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>

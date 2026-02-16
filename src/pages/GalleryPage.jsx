@@ -78,6 +78,7 @@ const GalleryPage = () => {
 
   const handleDelete = async (imgId, e) => {
     e.stopPropagation();
+
     const form = new FormData();
     form.append("id", imgId);
     form.append("token", ADMIN_TOKEN);
@@ -168,6 +169,22 @@ const GalleryPage = () => {
                   draggable={false}
                 />
 
+                {/* REQUEST QUOTE CTA */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const msg = encodeURIComponent(
+                        `Hi, I want this setup from your gallery:\n${img.url}`
+                      );
+                      window.open(`https://wa.me/919636798937?text=${msg}`, "_blank");
+                    }}
+                    className="w-full bg-[#5a9b7f] text-white py-2 rounded-lg text-sm font-medium hover:bg-[#4a826a] transition"
+                  >
+                    Request This Setup
+                  </button>
+                </div>
+
                 {isAdmin && (
                   <button
                     onClick={(e) => handleDelete(img.id, e)}
@@ -227,15 +244,24 @@ const GalleryPage = () => {
                 draggable={false}
               />
 
-              <button className="absolute left-4 top-1/2 -translate-y-1/2 text-white" onClick={(e) => { e.stopPropagation(); prev(); }}>
+              <button
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-white"
+                onClick={(e) => { e.stopPropagation(); prev(); }}
+              >
                 <ChevronLeft size={36} />
               </button>
 
-              <button className="absolute right-4 top-1/2 -translate-y-1/2 text-white" onClick={(e) => { e.stopPropagation(); next(); }}>
+              <button
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-white"
+                onClick={(e) => { e.stopPropagation(); next(); }}
+              >
                 <ChevronRight size={36} />
               </button>
 
-              <button className="absolute top-4 right-4 text-white" onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}>
+              <button
+                className="absolute top-4 right-4 text-white"
+                onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}
+              >
                 <X size={28} />
               </button>
             </div>

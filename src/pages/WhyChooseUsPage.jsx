@@ -17,7 +17,7 @@ import SEOFAQ from "@/components/SEOFAQ";
 const ownerPhotos = [
   "/assets/owner1.jpg",
   "/assets/owner2.jpg",
-  "/assets/owner2.jpg"
+  "/assets/owner3.jpg"
 ];
 
 const stripImages = [
@@ -136,14 +136,15 @@ const WhyChooseUsPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-6 max-w-3xl mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-6 px-4">
             {ownerPhotos.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                className="w-full h-72 object-cover rounded-2xl shadow-xl"
-                alt={`Rajasthan Tent House Owner ${i + 1}`}
-              />
+              <div key={i} className="w-full sm:w-1/2 lg:w-1/3 flex justify-center">
+                <img
+                  src={src}
+                  className="w-full max-w-xs h-72 object-cover rounded-2xl shadow-xl"
+                  alt={`Rajasthan Tent House Owner ${i + 1}`}
+                />
+              </div>
             ))}
           </div>
         </section>
