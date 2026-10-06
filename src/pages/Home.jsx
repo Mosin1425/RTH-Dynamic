@@ -4,6 +4,7 @@ import { servicesData } from "@/constants/data";
 import HeroSection from "@/components/HeroSection";
 import SEO from "@/components/SEO";
 import SEOFAQ from "@/components/SEOFAQ";
+import PremiumShowcaseSection from "@/components/PremiumShowcaseSection";
 
 const heroImages = [
   "/assets/001.jpg",
@@ -15,6 +16,7 @@ const heroImages = [
 const ownerPhotos = [
   "/assets/owner1.jpg",
   "/assets/owner2.jpg",
+  "/assets/owner3.jpg"
 ];
 
 const stripImages = [
@@ -48,7 +50,7 @@ const Home = () => {
         images={heroImages}
         showLearnMore
       />
-
+      {/* <PremiumShowcaseSection /> */}
       {/* OWNER / LEGACY */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 text-center">
@@ -60,19 +62,20 @@ const Home = () => {
             their most precious celebrations.
           </p>
 
-          <div className="grid grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-6">
             {ownerPhotos.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                className="w-full h-64 sm:h-72 object-cover rounded-2xl shadow-xl"
-                alt="Owner"
-              />
+              <div key={i} className="w-full sm:w-1/2 lg:w-1/3 flex justify-center">
+                <img
+                  src={src}
+                  className="w-full max-w-xs h-64 sm:h-72 object-cover rounded-2xl shadow-xl"
+                  alt={`Rajasthan Tent House Owner ${i + 1}`}
+                />
+              </div>
             ))}
           </div>
         </div>
       </section>
-
+      <PremiumShowcaseSection />
       {/* SERVICES */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">

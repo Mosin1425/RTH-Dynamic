@@ -32,46 +32,79 @@ const HeroSection = ({
 
   return (
     <section className="relative min-h-[70vh] sm:min-h-[85vh] flex items-center overflow-hidden bg-gray-900">
+      
+      {/* Background Slider */}
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 1.2 }}
           className="absolute inset-0"
         >
-          <div className="absolute inset-0 bg-black/55 z-10" />
+          {/* Cinematic Gradient Overlay */}
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/70 via-black/50 to-black/80 backdrop-blur-[2px]" />
+
+          {/* Subtle Radial Glow */}
+          <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]" />
+
           <img
             src={heroImages[current]}
-            alt="Hero"
+            alt="Hero Background"
             className="w-full h-full object-cover"
           />
         </motion.div>
       </AnimatePresence>
 
+      {/* Content */}
       <div className="container mx-auto px-4 relative z-20">
-        <div className="text-white space-y-5 max-w-xl">
+        <div className="text-white space-y-6 max-w-xl">
+
+          {/* Badge */}
           {badge && (
-            <div className="inline-flex items-center gap-2 bg-white/20 px-3 py-1.5 rounded-full text-xs">
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="inline-flex items-center gap-2 bg-white/20 backdrop-blur px-3 py-1.5 rounded-full text-xs border border-white/30"
+            >
               <Star className="w-3.5 h-3.5 text-yellow-300" fill="currentColor" />
               {badge}
-            </div>
+            </motion.div>
           )}
 
-          <h1 className="text-3xl sm:text-5xl font-bold leading-tight">
+          {/* Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="text-3xl sm:text-5xl font-bold leading-tight"
+          >
             {title}
-          </h1>
+          </motion.h1>
 
+          {/* Subtitle */}
           {subtitle && (
-            <p className="text-white/90 text-base sm:text-lg">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="text-white/90 text-base sm:text-lg"
+            >
               {subtitle}
-            </p>
+            </motion.p>
           )}
 
-          <div className="flex flex-wrap gap-3 pt-2">
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9 }}
+            className="flex flex-wrap gap-3 pt-3"
+          >
             <Link to={primaryCtaLink}>
-              <Button className="bg-yellow-500 text-white rounded-full px-6">
+              <Button className="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full px-6 shadow-lg hover:scale-105 transition-all">
                 {primaryCtaText}
               </Button>
             </Link>
@@ -79,13 +112,14 @@ const HeroSection = ({
             {showLearnMore && (
               <Link to={secondaryCtaLink}>
                 <Button
-                  className="bg-white/10 border border-white/80 text-white hover:bg-white/20 rounded-full px-6"
+                  className="bg-white/10 border border-white/80 text-white hover:bg-white/20 rounded-full px-6 transition-all"
                 >
                   {secondaryCtaText}
                 </Button>
               </Link>
             )}
-          </div>
+          </motion.div>
+
         </div>
       </div>
     </section>

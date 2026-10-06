@@ -7,11 +7,13 @@ import OurStoryPage from '@/pages/OurStoryPage';
 import AboutPage from '@/pages/AboutPage';
 import ServiceDetailPage from '@/pages/ServiceDetailPage';
 import GalleryPage from '@/pages/GalleryPage';
+import AdminPage from '@/pages/AdminPage';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import BuiltByMosin from "@/components/BuiltByMosin";
+import AmbientSound from "@/components/AmbientSound";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -33,7 +35,8 @@ function AppContent() {
 
         {/* Floating "Built by Mosin" Badge */}
         <BuiltByMosin />
-
+        {/* Ambient sound (mounted once, available across pages) */}
+        <AmbientSound />
         <main className="flex-grow pt-24">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -43,6 +46,7 @@ function AppContent() {
             <Route path="/services/:id" element={<ServiceDetailPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </main>
 
