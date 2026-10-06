@@ -6,8 +6,8 @@ Mosin's portfolio demo for new clients, deployed as a Render Static Site. Next p
 
 ## Stack
 
-- React 18 + Vite 4 (plain JS), Tailwind 3, framer-motion, lucide-react, react-router-dom 6,
-  react-helmet-async for SEO. `@/` resolves to `src/`.
+- React 18 + Vite 4 (plain JS), Tailwind 3, framer-motion, Lenis (smooth scroll), lucide-react,
+  react-router-dom 6, react-helmet-async for SEO. `@/` resolves to `src/`.
 - Backend: Supabase (Postgres + Storage + Auth) called directly from the browser. No server.
 
 ## Commands
@@ -27,15 +27,29 @@ Mosin's portfolio demo for new clients, deployed as a Render Static Site. Next p
   public by design; never commit the secret key.
 - Free tier pauses after ~7 days without traffic; restore it in the dashboard before a demo.
 
+## Design system
+
+- Palette (tailwind.config.js): `emerald-*` (brand green, `emerald-500` = old #5a9b7f), `gold-*`, `ivory`, `ink`.
+  Fonts: Cormorant Garamond (`font-display`, all headings) + Manrope (body), loaded in `index.html`.
+- Shared CSS classes in `src/index.css`: `eyebrow`, `btn-gold`, `btn-ghost`, `btn-dark`, `glass`, `grain`,
+  `pattern-jaali`, `text-gold-gradient` (dark backgrounds), `text-gold-deep` (light backgrounds).
+- Motion primitives in `src/components/motion/`: `Reveal`, `SplitText` (wrap words in `*…*` to highlight),
+  `Magnetic`, `Marquee`, `CountUp`, `SpotlightCard`, `ScrollProgress`, `SmoothScroll` (`useLenis()`).
+  `MotionConfig reducedMotion="user"` in `App.jsx` respects the OS reduced-motion setting.
+- Page building blocks: `PageHero`, `SectionHeading`, `CtaBand`, `SEOFAQ`, `PhotoGallery` (masonry + lightbox +
+  admin controls, shared by Gallery and Service pages). Home sections live in `src/components/home/`.
+- Shared content (services with images, stats, testimonials, FAQs, WhatsApp number) is in `src/constants/data.js`.
+- All pages except Home are lazy-loaded; Supabase only loads on Gallery/Service/Admin pages.
+
 ## Content notes
 
-- Enquiries go to WhatsApp (919636798937, hardcoded in several components); there is no email backend.
-- Static photos are in `public/assets`.
+- Enquiries go to WhatsApp (`WHATSAPP_NUMBER` / `whatsappLink()` in `src/constants/data.js`); there is no
+  email backend. Mosin's own number (916350089531) is used only by the "built by Mosin" lead links.
+- Static photos are in `public/assets`. If Supabase returns no photos (empty or paused), visitors see the
+  bundled `fallbackGallery` / `showcaseImages` instead; admins always see the real state.
 
 ## Known issues / backlog
 
-- `src/index.css`: the Google Fonts `@import` comes after `@tailwind`, so Inter likely never loads (Vite warns).
-- SEO canonical URLs and `events@rajasthantenthouse.com` still point to the dead domain.
-- JS bundle is ~664 KB with no code splitting.
-- Lightbox and photo-grid code is duplicated between `GalleryPage` and `ServiceDetailPage`.
+- SEO canonical URLs (`SITE_URL`) still point to the dead domain.
+- Testimonials in `data.js` are placeholder copy.
 - Deep links like `/gallery` need a Render rewrite rule `/*` → `/index.html`.
