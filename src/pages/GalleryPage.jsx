@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trash2, Plus, Lock, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
 import HeroSection from '@/components/HeroSection';
 import SEO from '@/components/SEO';
-
-const API_BASE = "https://rajasthantenthouse.com/api";
-const ADMIN_TOKEN = "rth-secure-2026";
+import AdminLoginDialog from '@/components/AdminLoginDialog';
+import { useAdmin } from '@/hooks/useAdmin';
+import { useImages } from '@/hooks/useImages';
 
 const BeautifulLoader = () => (
   <div className="flex flex-col items-center justify-center py-20 text-center">
@@ -21,74 +20,22 @@ const BeautifulLoader = () => (
 );
 
 const GalleryPage = () => {
-  const [images, setImages] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(() => localStorage.getItem("isAdmin") === "true");
-  const [loginData, setLoginData] = useState({ username: '', password: '' });
+  const { isAdmin, login, logout } = useAdmin();
+  const { images, loading, uploading, upload, remove } = useImages("gallery", "main");
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   const touchStartX = useRef(0);
 
-  useEffect(() => {
-    fetch(`${API_BASE}/get_images.php?type=gallery&key=main`)
-      .then(res => res.json())
-      .then(data => {
-        setImages(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setImages([]);
-        setLoading(false);
-      });
-  }, []);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (loginData.username === 'admin' && loginData.password === 'Rajasthan@1122') {
-      setIsAdmin(true);
-      localStorage.setItem("isAdmin", "true");
-      setIsLoginOpen(false);
-      toast({ title: "Welcome Admin" });
-    } else {
-      toast({ title: "Invalid credentials", variant: "destructive" });
-    }
+  const handleFileUpload = (e) => {
+    const files = Array.from(e.target.files);
+    e.target.value = "";
+    if (files.length) upload(files);
   };
 
-  const handleFileUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const form = new FormData();
-    form.append("type", "gallery");
-    form.append("key", "main");
-    form.append("image", file);
-    form.append("token", ADMIN_TOKEN);
-
-    const res = await fetch(`${API_BASE}/upload_image.php`, { method: "POST", body: form });
-    const data = await res.json();
-
-    if (data.error) {
-      toast({ title: "Upload Failed", description: data.error, variant: "destructive" });
-      return;
-    }
-
-    setImages(prev => [{ id: data.id, url: data.url }, ...prev]);
-  };
-
-  const handleDelete = async (imgId, e) => {
+  const handleDelete = (img, e) => {
     e.stopPropagation();
-
-    const form = new FormData();
-    form.append("id", imgId);
-    form.append("token", ADMIN_TOKEN);
-
-    const res = await fetch(`${API_BASE}/delete_image.php`, { method: "POST", body: form });
-    const data = await res.json();
-
-    if (!data.error) {
-      setImages(prev => prev.filter(i => i.id !== imgId));
-    }
+    if (window.confirm("Delete this photo? This cannot be undone.")) remove(img);
   };
 
   const next = () => setLightboxIndex(i => (i + 1) % images.length);
@@ -121,18 +68,11 @@ const GalleryPage = () => {
 
           {isAdmin ? (
             <div className="flex gap-2">
-              <input type="file" id="g-up" className="hidden" onChange={handleFileUpload} />
-              <label htmlFor="g-up" className="flex items-center gap-1 bg-[#5a9b7f] text-white px-3 py-2 rounded-lg text-sm cursor-pointer">
-                <Plus size={14} /> Add
+              <input type="file" id="g-up" className="hidden" accept="image/*" multiple disabled={uploading} onChange={handleFileUpload} />
+              <label htmlFor="g-up" className={`flex items-center gap-1 bg-[#5a9b7f] text-white px-3 py-2 rounded-lg text-sm ${uploading ? "opacity-60 cursor-wait" : "cursor-pointer"}`}>
+                <Plus size={14} /> {uploading ? "Uploading..." : "Add"}
               </label>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  setIsAdmin(false);
-                  localStorage.removeItem("isAdmin");
-                }}
-              >
+              <Button variant="outline" size="sm" onClick={logout}>
                 Logout
               </Button>
             </div>
@@ -187,7 +127,7 @@ const GalleryPage = () => {
 
                 {isAdmin && (
                   <button
-                    onClick={(e) => handleDelete(img.id, e)}
+                    onClick={(e) => handleDelete(img, e)}
                     className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-full z-20"
                   >
                     <Trash2 size={12} />
@@ -200,32 +140,7 @@ const GalleryPage = () => {
       </div>
 
       {isLoginOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg p-6 w-full max-w-sm">
-            <h3 className="text-lg font-bold mb-4">Admin Login</h3>
-            <form onSubmit={handleLogin} className="space-y-3">
-              <input
-                className="w-full border p-2 rounded"
-                placeholder="Username"
-                onChange={e => setLoginData({ ...loginData, username: e.target.value })}
-              />
-              <input
-                className="w-full border p-2 rounded"
-                type="password"
-                placeholder="Password"
-                onChange={e => setLoginData({ ...loginData, password: e.target.value })}
-              />
-              <div className="flex justify-end gap-2">
-                <Button type="button" variant="ghost" onClick={() => setIsLoginOpen(false)}>
-                  Cancel
-                </Button>
-                <Button type="submit" className="bg-[#5a9b7f] text-white">
-                  Login
-                </Button>
-              </div>
-            </form>
-          </div>
-        </div>
+        <AdminLoginDialog onLogin={login} onClose={() => setIsLoginOpen(false)} />
       )}
 
       <AnimatePresence>
