@@ -36,6 +36,12 @@ Mosin's portfolio demo for new clients, deployed as a Render Static Site. Next p
 - Motion primitives in `src/components/motion/`: `Reveal`, `SplitText` (wrap words in `*…*` to highlight),
   `Magnetic`, `Marquee`, `CountUp`, `SpotlightCard`, `ScrollProgress`, `SmoothScroll` (`useLenis()`).
   `MotionConfig reducedMotion="user"` in `App.jsx` respects the OS reduced-motion setting.
+- Home opens with `CinematicHero` (src/components/home/): a pinned, scroll-scrubbed sequence (arch window
+  opens → photo chapters → headline + CTAs). Its timeline is documented at the top of the file; it reveals
+  photos by growing a CSS mask (never by scaling the photo) to keep them sharp. Reduced-motion visitors get
+  the simpler `HomeHero`. The global `Preloader` is skipped on `/` because the hero has its own intro.
+- Mobile-first extras: `ServicesBento` becomes sticky stacking cards under 640px; `ServicesTicker` is two
+  crossing ribbons that react to scroll speed; `motion/Petals` adds falling marigold petals.
 - Page building blocks: `PageHero`, `SectionHeading`, `CtaBand`, `SEOFAQ`, `PhotoGallery` (masonry + lightbox +
   admin controls, shared by Gallery and Service pages). Home sections live in `src/components/home/`.
 - Shared content (services with images, stats, testimonials, FAQs, WhatsApp number) is in `src/constants/data.js`.

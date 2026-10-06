@@ -3,9 +3,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { EASE } from '@/components/motion/Reveal';
 import Logo from './Logo';
 
-// Short branded intro shown once per browser session.
+// Short branded intro shown once per browser session. The home page has its own animated
+// intro (CinematicHero), so landing there skips it.
 export default function Preloader() {
   const [show, setShow] = useState(() => {
+    if (window.location.pathname === '/') return false;
     try {
       return !sessionStorage.getItem('rth-intro');
     } catch {
