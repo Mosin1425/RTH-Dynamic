@@ -21,7 +21,8 @@ Mosin's portfolio demo for new clients, deployed as a Render Static Site. Next p
 - Photos live in the `images` table (`type` = `gallery` | `service`, `key` = `main` | service id from
   `src/constants/data.js`, `path` in the public `images` bucket). Only users listed in `public.admins` can write.
 - Client code: `src/lib/supabase.js`, `src/lib/images.js`, `src/hooks/useAdmin.js`,
-  `src/hooks/useImages.js`, `src/components/AdminLoginDialog.jsx`.
+  `src/hooks/useImages.js`, `src/pages/AdminPage.jsx`.
+- Admin login is the unlisted `/admin` page (noindex, linked from nowhere); photo pages show Add/Delete only to admins.
 - Env: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (see `.env.example`). The publishable key is
   public by design; never commit the secret key.
 - Free tier pauses after ~7 days without traffic; restore it in the dashboard before a demo.

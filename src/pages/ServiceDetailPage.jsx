@@ -2,11 +2,10 @@ import React, { useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { servicesData } from '@/constants/data';
-import { ChevronLeft, ChevronRight, Plus, Trash2, X, Lock } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, Trash2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import HeroSection from '@/components/HeroSection';
 import SEO from '@/components/SEO';
-import AdminLoginDialog from '@/components/AdminLoginDialog';
 import { useAdmin } from '@/hooks/useAdmin';
 import { useImages } from '@/hooks/useImages';
 
@@ -36,10 +35,9 @@ const ServiceDetailPage = () => {
   const { id } = useParams();
   const service = servicesData.find(s => s.id === id);
 
-  const { isAdmin, login, logout } = useAdmin();
+  const { isAdmin, logout } = useAdmin();
   const { images, loading, uploading, upload, remove } = useImages("service", service ? id : null);
   const [selected, setSelected] = useState(null);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const touchStartX = useRef(0);
 
@@ -113,7 +111,7 @@ const ServiceDetailPage = () => {
         <div className="flex justify-between items-center mb-5">
           <h2 className="text-lg sm:text-2xl font-bold">Photos</h2>
 
-          {isAdmin ? (
+          {isAdmin && (
             <div className="flex gap-2">
               <input type="file" id="s-up" className="hidden" accept="image/*" multiple disabled={uploading} onChange={handleFileUpload} />
               <label htmlFor="s-up" className={`flex items-center gap-1 px-3 py-2 bg-[#5a9b7f] text-white rounded-lg text-sm ${uploading ? "opacity-60 cursor-wait" : "cursor-pointer"}`}>
@@ -123,10 +121,6 @@ const ServiceDetailPage = () => {
                 Logout
               </Button>
             </div>
-          ) : (
-            <Button size="sm" variant="ghost" onClick={() => setIsLoginOpen(true)}>
-              <Lock size={14} className="mr-1" /> Admin
-            </Button>
           )}
         </div>
 
@@ -134,7 +128,7 @@ const ServiceDetailPage = () => {
           <BeautifulLoader />
         ) : images.length === 0 ? (
           <div className="text-center text-gray-500 py-16 text-sm sm:text-base">
-            No photos yet. Log in as admin to add.
+            {isAdmin ? "No photos yet. Use Add to upload some." : "No photos yet."}
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 auto-rows-[140px] sm:auto-rows-[180px]">
@@ -190,10 +184,6 @@ const ServiceDetailPage = () => {
           ))}
         </div>
       </section>
-
-      {isLoginOpen && (
-        <AdminLoginDialog onLogin={login} onClose={() => setIsLoginOpen(false)} />
-      )}
 
       <AnimatePresence>
         {selected !== null && images[selected] && (

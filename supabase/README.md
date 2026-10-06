@@ -36,6 +36,11 @@ From **Project Settings → API Keys** copy the **Project URL** and the **publis
   `VITE_SUPABASE_PUBLISHABLE_KEY` → **Manual Deploy → Clear build cache & deploy**.
   Vite bakes these in at build time, so a redeploy is required after changing them.
 
+## Managing photos
+
+Go to `/admin` (it isn't linked anywhere on the site), log in, and pick a page. The Gallery and
+Service pages then show **Add** / delete buttons. Visitors never see an admin button.
+
 ## Notes
 
 - Free Supabase projects **pause after ~7 days with no traffic**. Before a demo, open the

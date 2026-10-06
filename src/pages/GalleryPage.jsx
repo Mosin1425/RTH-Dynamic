@@ -1,10 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trash2, Plus, Lock, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Trash2, Plus, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import HeroSection from '@/components/HeroSection';
 import SEO from '@/components/SEO';
-import AdminLoginDialog from '@/components/AdminLoginDialog';
 import { useAdmin } from '@/hooks/useAdmin';
 import { useImages } from '@/hooks/useImages';
 
@@ -20,9 +19,8 @@ const BeautifulLoader = () => (
 );
 
 const GalleryPage = () => {
-  const { isAdmin, login, logout } = useAdmin();
+  const { isAdmin, logout } = useAdmin();
   const { images, loading, uploading, upload, remove } = useImages("gallery", "main");
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
   const touchStartX = useRef(0);
@@ -66,7 +64,7 @@ const GalleryPage = () => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-base sm:text-2xl font-bold">Photos</h2>
 
-          {isAdmin ? (
+          {isAdmin && (
             <div className="flex gap-2">
               <input type="file" id="g-up" className="hidden" accept="image/*" multiple disabled={uploading} onChange={handleFileUpload} />
               <label htmlFor="g-up" className={`flex items-center gap-1 bg-[#5a9b7f] text-white px-3 py-2 rounded-lg text-sm ${uploading ? "opacity-60 cursor-wait" : "cursor-pointer"}`}>
@@ -76,10 +74,6 @@ const GalleryPage = () => {
                 Logout
               </Button>
             </div>
-          ) : (
-            <Button variant="ghost" size="sm" onClick={() => setIsLoginOpen(true)}>
-              <Lock size={14} className="mr-1" /> Admin
-            </Button>
           )}
         </div>
 
@@ -87,7 +81,7 @@ const GalleryPage = () => {
           <BeautifulLoader />
         ) : images.length === 0 ? (
           <div className="text-center text-gray-500 py-16 text-sm sm:text-base">
-            No photos yet. Log in as admin to add.
+            {isAdmin ? "No photos yet. Use Add to upload some." : "No photos yet."}
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -138,10 +132,6 @@ const GalleryPage = () => {
           </div>
         )}
       </div>
-
-      {isLoginOpen && (
-        <AdminLoginDialog onLogin={login} onClose={() => setIsLoginOpen(false)} />
-      )}
 
       <AnimatePresence>
         {lightboxIndex !== null && images[lightboxIndex] && (
