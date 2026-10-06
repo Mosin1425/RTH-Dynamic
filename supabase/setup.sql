@@ -87,8 +87,12 @@ create policy "Admins can delete site images"
 
 -- ─── Make yourself an admin ──────────────────────────────────────────────────
 -- 1. Authentication → Users → Add user → Create new user (tick "Auto Confirm User").
--- 2. Put that email below, then run ONLY this statement:
+-- 2. Put that email below, then run ONLY this statement (it must run AFTER the user exists):
 --
 -- insert into public.admins (user_id)
--- select id from auth.users where email = 'you@example.com'
+-- select id from auth.users where email = lower('you@example.com')
 -- on conflict do nothing;
+--
+-- Check who is an admin:
+-- select u.email, a.user_id is not null as is_admin
+-- from auth.users u left join public.admins a on a.user_id = u.id;

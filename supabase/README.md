@@ -13,12 +13,18 @@ the React app talks to Supabase directly and Row Level Security decides who may 
 
 1. **Authentication → Users → Add user → Create new user**, enter email + password,
    tick **Auto Confirm User**.
-2. **SQL Editor**, run (with that email):
+2. **SQL Editor**, run (with that email). It must run *after* the user exists, otherwise it adds nothing:
    ```sql
    insert into public.admins (user_id)
-   select id from auth.users where email = 'you@example.com'
+   select id from auth.users where email = lower('you@example.com')
    on conflict do nothing;
    ```
+   Check it worked (your email should show `is_admin = true`):
+   ```sql
+   select u.email, a.user_id is not null as is_admin
+   from auth.users u left join public.admins a on a.user_id = u.id;
+   ```
+   If login says "This account is not an admin", this step is what's missing.
 3. Recommended: **Authentication → Sign In / Providers** → turn off **Allow new users to sign up**.
 
 ## 3. Connect the site

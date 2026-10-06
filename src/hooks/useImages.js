@@ -33,6 +33,7 @@ export function useImages(type, key) {
         setImages(prev => [image, ...prev]);
         added++;
       } catch (err) {
+        console.error('Upload failed:', err);
         toast({ title: "Upload Failed", description: err.message, variant: "destructive" });
       }
     }
@@ -45,6 +46,7 @@ export function useImages(type, key) {
       await deleteImage(image);
       setImages(prev => prev.filter(i => i.id !== image.id));
     } catch (err) {
+      console.error('Delete failed:', err);
       toast({ title: "Delete Failed", description: err.message, variant: "destructive" });
     }
   };
