@@ -103,6 +103,18 @@ module.exports = {
 				'spin-slow': {
 					to: { transform: 'rotate(360deg)' },
 				},
+				// Marigold petals drifting down with a gentle sway
+				'petal-fall': {
+					'0%': { transform: 'translate3d(0,-10vh,0) rotate(0deg)', opacity: 0 },
+					'10%': { opacity: 1 },
+					'50%': { transform: 'translate3d(var(--petal-sway,40px),50vh,0) rotate(220deg)' },
+					'90%': { opacity: 1 },
+					'100%': { transform: 'translate3d(0,110vh,0) rotate(440deg)', opacity: 0 },
+				},
+				bob: {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -110,6 +122,8 @@ module.exports = {
 				marquee: 'marquee var(--marquee-duration, 40s) linear infinite',
 				shimmer: 'shimmer 6s linear infinite',
 				'spin-slow': 'spin-slow 18s linear infinite',
+				'petal-fall': 'petal-fall var(--petal-duration,12s) linear infinite',
+				bob: 'bob 6s ease-in-out infinite',
 			},
 		},
 	},

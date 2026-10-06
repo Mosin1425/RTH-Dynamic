@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import SectionHeading from '@/components/SectionHeading';
 import { EASE } from '@/components/motion/Reveal';
@@ -18,6 +18,15 @@ const spans = [
 ];
 
 export default function ServicesBento() {
+  // Phones get a deck of full-height cards that stack as you scroll; larger screens get the bento grid.
+  const [stacked, setStacked] = useState(() => window.matchMedia('(max-width: 639px)').matches);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)');
+    const update = () => setStacked(mq.matches);
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
   return (
     <section className="bg-ivory-100 py-24 sm:py-32">
       <div className="container">
@@ -33,6 +42,7 @@ export default function ServicesBento() {
           </Link>
         </div>
 
+        {stacked ? <StackedCards /> : (
         <div className="mt-14 grid auto-rows-[260px] grid-cols-1 gap-4 sm:grid-cols-2 lg:auto-rows-[240px] lg:grid-cols-4">
           {servicesData.map((s, i) => (
             <motion.div
@@ -76,7 +86,55 @@ export default function ServicesBento() {
             </motion.div>
           ))}
         </div>
+        )}
       </div>
     </section>
+  );
+}
+
+function StackedCards() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const n = servicesData.length;
+
+  return (
+    <div ref={ref} className="mt-10">
+      {servicesData.map((s, i) => (
+        <StackCard key={s.id} s={s} i={i} n={n} progress={scrollYProgress} />
+      ))}
+    </div>
+  );
+}
+
+function StackCard({ s, i, n, progress }) {
+  // Each card shrinks and dims slightly as the cards after it slide over it.
+  const scale = useTransform(progress, [i / n, 1], [1, 1 - (n - i) * 0.035]);
+  const dim = useTransform(progress, [i / n, Math.min(1, (i + 1) / n)], [0, i === n - 1 ? 0 : 0.35]);
+
+  return (
+    <div className="sticky top-0 flex h-[78svh] items-center">
+      <motion.div style={{ scale, top: `${i * 14}px` }} className="relative w-full origin-top">
+        <Link to={`/services/${s.id}`} className="relative block h-[62svh] overflow-hidden rounded-[2rem] bg-emerald-900 text-ivory shadow-[0_-20px_50px_-20px_rgba(12,31,26,0.6)]">
+          <img src={s.image} alt={s.title} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-emerald-950 via-emerald-950/40 to-transparent" />
+          <motion.div className="absolute inset-0 bg-emerald-950" style={{ opacity: dim }} />
+
+          <span className="absolute left-5 top-5 flex items-center gap-2 rounded-full bg-black/30 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] backdrop-blur-md">
+            <s.icon className="h-3.5 w-3.5 text-gold-300" /> {s.shortTitle}
+          </span>
+          <span className="absolute right-5 top-5 font-display text-4xl font-semibold text-transparent [-webkit-text-stroke:1px_rgba(250,246,238,0.7)]">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+
+          <div className="absolute inset-x-0 bottom-0 p-6">
+            <h3 className="text-3xl font-semibold leading-tight">{s.title}</h3>
+            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ivory/75">{s.description}</p>
+            <span className="mt-5 inline-flex items-center gap-2 rounded-full bg-gold-400 px-5 py-2.5 text-sm font-semibold text-emerald-950">
+              Explore <ArrowUpRight className="h-4 w-4" />
+            </span>
+          </div>
+        </Link>
+      </motion.div>
+    </div>
   );
 }
