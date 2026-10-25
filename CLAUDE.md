@@ -42,6 +42,13 @@ Mosin's portfolio demo for new clients, deployed as a Render Static Site. Next p
   the simpler `HomeHero`. The global `Preloader` is skipped on `/` because the hero has its own intro.
 - Mobile-first extras: `ServicesBento` becomes sticky stacking cards under 640px; `ServicesTicker` is two
   crossing ribbons that react to scroll speed; `motion/Petals` adds falling marigold petals.
+- 3D: `motion/DepthPhoto` is a small raw-WebGL "living photo" that shifts a photo by its depth map
+  (`public/assets/depth/*.jpg`, made with `scripts/generate-depth.py`) as the viewer tilts the phone or moves
+  the mouse. Input comes from `src/lib/tilt.js` (gyroscope → mouse → idle drift; iOS needs a tap, handled by
+  `motion/TiltPrompt`). Used in the CinematicHero opening and the `LivingPhotos` section.
+- `home/Mandap3D` is a pinned section where a three.js mandap, built in code in `home/mandap/scene.js`
+  (no model files), assembles as you scroll. three.js loads lazily as its own ~130 KB gzipped chunk when the
+  section is near, renders only while on screen, and falls back to a photo without WebGL.
 - Page building blocks: `PageHero`, `SectionHeading`, `CtaBand`, `SEOFAQ`, `PhotoGallery` (masonry + lightbox +
   admin controls, shared by Gallery and Service pages). Home sections live in `src/components/home/`.
 - Shared content (services with images, stats, testimonials, FAQs, WhatsApp number) is in `src/constants/data.js`.

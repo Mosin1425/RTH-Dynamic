@@ -14,6 +14,8 @@ import Testimonials from "@/components/home/Testimonials";
 import VideoShowcase from "@/components/home/VideoShowcase";
 import PhotoRibbon from "@/components/home/PhotoRibbon";
 import BuiltByMosinSection from "@/components/home/BuiltByMosinSection";
+import LivingPhotos from "@/components/home/LivingPhotos";
+import Mandap3D from "@/components/home/Mandap3D";
 import { SITE_URL } from "@/constants/data";
 
 const Home = () => {
@@ -30,10 +32,12 @@ const Home = () => {
 
       {reduceMotion ? <HomeHero /> : <CinematicHero />}
       <ServicesTicker />
+      <LivingPhotos />
       <LegacySection />
       <ServicesBento />
       <SignatureScroll />
       <ProcessTimeline />
+      <Mandap3D />
       <Testimonials />
       <VideoShowcase />
       <PhotoRibbon />

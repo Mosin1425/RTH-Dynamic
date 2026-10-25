@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight, ChevronsDown, MessageCircle } from 'lucide-react';
 import Petals from '@/components/motion/Petals';
+import DepthPhoto from '@/components/motion/DepthPhoto';
 import Magnetic from '@/components/motion/Magnetic';
 import { EASE } from '@/components/motion/Reveal';
 import { whatsappLink } from '@/constants/data';
@@ -25,7 +26,7 @@ const ARCH_MASK = `url("data:image/svg+xml,${encodeURIComponent(
 const ORIGIN_Y = 0.71;
 const FOCUS_Y = 0.52;
 
-const opening = { src: '/assets/AI_01.png' };
+const opening = { src: '/assets/AI_01.png', depth: '/assets/depth/AI_01.jpg' };
 const chapters = [
   { src: '/assets/003-vmake.jpg', word: 'Weddings', caption: 'Royal stages & mandaps' },
   { src: '/assets/photos4.jpg', word: 'Haldi', caption: 'Marigold-bright mornings' },
@@ -83,6 +84,7 @@ export default function CinematicHero() {
   const maskSize = useTransform(scale, (s) => `${archW * s}px ${archH * s}px`);
   const maskPosition = useTransform(scale, (s) => `${w / 2 - (archW * s) / 2}px ${h * FOCUS_Y - archH * ORIGIN_Y * s}px`);
   const openingZoom = useTransform(p, [0, 0.3], [1.15, 1]);
+  const depthAmount = useTransform(p, [0, 0.3], [1, 0.35]); // calm the 3D tilt once the photo fills the screen
   const outline = useTransform(p, [0, 0.12, 0.22], [1, 0.6, 0]);
   const introOut = useTransform(p, [0, 0.07], [1, 0]);
   const introY = useTransform(p, [0, 0.07], [0, -30]);
@@ -129,7 +131,7 @@ export default function CinematicHero() {
             maskPosition,
           }}
         >
-          <motion.img src={opening.src} alt="" style={{ scale: openingZoom }} className="absolute inset-0 h-full w-full object-cover" />
+          <DepthPhoto src={opening.src} depth={opening.depth} zoom={openingZoom} motion={depthAmount} strength={0.04} priority className="absolute inset-0" />
           {chapters.map((c, i) => (
             <ChapterImage key={c.src} src={c.src} p={p} range={chapterRange(i)} first={i === 0} />
           ))}
