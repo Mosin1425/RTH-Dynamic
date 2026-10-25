@@ -1,178 +1,48 @@
-import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Trash2, Plus, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import HeroSection from '@/components/HeroSection';
+import React from 'react';
+import PageHero from '@/components/PageHero';
 import SEO from '@/components/SEO';
+import CtaBand from '@/components/CtaBand';
+import PhotoGallery from '@/components/PhotoGallery';
 import { useAdmin } from '@/hooks/useAdmin';
 import { useImages } from '@/hooks/useImages';
-
-const BeautifulLoader = () => (
-  <div className="flex flex-col items-center justify-center py-20 text-center">
-    <motion.div
-      animate={{ rotate: 360 }}
-      transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
-      className="w-16 h-16 rounded-full border-4 border-[#5a9b7f]/30 border-t-[#5a9b7f]"
-    />
-    <p className="mt-4 text-gray-500 text-sm">Loading beautiful moments...</p>
-  </div>
-);
+import { SITE_URL, fallbackGallery } from '@/constants/data';
 
 const GalleryPage = () => {
   const { isAdmin, logout } = useAdmin();
-  const { images, loading, uploading, upload, remove } = useImages("gallery", "main");
-  const [lightboxIndex, setLightboxIndex] = useState(null);
-
-  const touchStartX = useRef(0);
-
-  const handleFileUpload = (e) => {
-    const files = Array.from(e.target.files);
-    e.target.value = "";
-    if (files.length) upload(files);
-  };
-
-  const handleDelete = (img, e) => {
-    e.stopPropagation();
-    if (window.confirm("Delete this photo? This cannot be undone.")) remove(img);
-  };
-
-  const next = () => setLightboxIndex(i => (i + 1) % images.length);
-  const prev = () => setLightboxIndex(i => (i - 1 + images.length) % images.length);
-
-  const onTouchStart = (e) => (touchStartX.current = e.touches[0].clientX);
-  const onTouchEnd = (e) => {
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (dx > 60) prev();
-    if (dx < -60) next();
-  };
+  const { images, loading, uploading, upload, remove } = useImages('gallery', 'main');
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="overflow-x-clip">
       <SEO
         title="Event Gallery – Wedding & Event Setups in Bhilwara"
         description="Explore our event gallery featuring real wedding and event setups by Rajasthan Tent House in Bhilwara."
-        url="https://rajasthantenthouse.com/gallery"
+        url={`${SITE_URL}/gallery`}
       />
 
-      <HeroSection
-        title="Our Event Gallery"
-        subtitle="Real Moments. Real Setups. Real Celebrations."
+      <PageHero
+        eyebrow="Gallery"
+        title="Real moments. *Real celebrations.*"
+        subtitle="Tap any photo to view it full screen, or request the same setup for your event on WhatsApp."
         image="/assets/006-vmake.jpg"
+        crumbs={[{ label: 'Gallery' }]}
       />
 
-      <div className="container mx-auto px-3 sm:px-4 py-12">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-base sm:text-2xl font-bold">Photos</h2>
+      <section className="container py-20 sm:py-24">
+        <PhotoGallery
+          images={images}
+          loading={loading}
+          uploading={uploading}
+          isAdmin={isAdmin}
+          onUpload={upload}
+          onRemove={remove}
+          onLogout={logout}
+          altPrefix="Rajasthan Tent House event setup"
+          inputId="gallery-upload"
+          fallback={fallbackGallery}
+        />
+      </section>
 
-          {isAdmin && (
-            <div className="flex gap-2">
-              <input type="file" id="g-up" className="hidden" accept="image/*" multiple disabled={uploading} onChange={handleFileUpload} />
-              <label htmlFor="g-up" className={`flex items-center gap-1 bg-[#5a9b7f] text-white px-3 py-2 rounded-lg text-sm ${uploading ? "opacity-60 cursor-wait" : "cursor-pointer"}`}>
-                <Plus size={14} /> {uploading ? "Uploading..." : "Add"}
-              </label>
-              <Button variant="outline" size="sm" onClick={logout}>
-                Logout
-              </Button>
-            </div>
-          )}
-        </div>
-
-        {loading ? (
-          <BeautifulLoader />
-        ) : images.length === 0 ? (
-          <div className="text-center text-gray-500 py-16 text-sm sm:text-base">
-            {isAdmin ? "No photos yet. Use Add to upload some." : "No photos yet."}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {images.map((img, i) => (
-              <motion.div
-                key={img.id}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -80 : 80, scale: 0.96 }}
-                whileInView={{ opacity: 1, x: 0, scale: 1 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: i * 0.05 }}
-                viewport={{ once: true, amount: 0.25 }}
-                onClick={() => setLightboxIndex(i)}
-                className="relative overflow-hidden rounded-xl shadow-lg cursor-pointer group"
-              >
-                <img
-                  src={img.url}
-                  loading="lazy"
-                  alt={`Rajasthan Tent House Event Setup ${i + 1}`}
-                  className="w-full h-[240px] sm:h-[260px] object-cover transition-transform duration-700 group-hover:scale-105"
-                  draggable={false}
-                />
-
-                {/* REQUEST QUOTE CTA */}
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const msg = encodeURIComponent(
-                        `Hi, I want this setup from your gallery:\n${img.url}`
-                      );
-                      window.open(`https://wa.me/919636798937?text=${msg}`, "_blank");
-                    }}
-                    className="w-full bg-[#5a9b7f] text-white py-2 rounded-lg text-sm font-medium hover:bg-[#4a826a] transition"
-                  >
-                    Request This Setup
-                  </button>
-                </div>
-
-                {isAdmin && (
-                  <button
-                    onClick={(e) => handleDelete(img, e)}
-                    className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-full z-20"
-                  >
-                    <Trash2 size={12} />
-                  </button>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <AnimatePresence>
-        {lightboxIndex !== null && images[lightboxIndex] && (
-          <motion.div
-            className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center touch-none"
-            onTouchStart={onTouchStart}
-            onTouchEnd={onTouchEnd}
-          >
-            <div className="absolute inset-0" onClick={() => setLightboxIndex(null)} />
-
-            <div className="relative z-10">
-              <img
-                src={images[lightboxIndex].url}
-                className="max-h-[90vh] max-w-[90vw] object-contain"
-                draggable={false}
-              />
-
-              <button
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-white"
-                onClick={(e) => { e.stopPropagation(); prev(); }}
-              >
-                <ChevronLeft size={36} />
-              </button>
-
-              <button
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white"
-                onClick={(e) => { e.stopPropagation(); next(); }}
-              >
-                <ChevronRight size={36} />
-              </button>
-
-              <button
-                className="absolute top-4 right-4 text-white"
-                onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}
-              >
-                <X size={28} />
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <CtaBand title="Loved a setup? Let’s make it *yours*" />
     </div>
   );
 };

@@ -13,7 +13,7 @@ const AdminPage = () => {
   const { isAdmin, ready, login, logout } = useAdmin();
 
   return (
-    <div className="min-h-[70vh] bg-white flex items-center justify-center px-4 py-16">
+    <div className="flex min-h-[80vh] items-center justify-center bg-ivory px-4 pb-16 pt-32">
       <Helmet>
         <title>Admin | Rajasthan Tent House</title>
         <meta name="robots" content="noindex, nofollow" />
@@ -41,11 +41,11 @@ const LoginForm = ({ onLogin }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border p-6 sm:p-8 w-full max-w-sm">
-      <h1 className="text-2xl font-bold mb-6">Admin Login</h1>
+    <div className="w-full max-w-sm rounded-3xl border bg-white p-6 shadow-xl sm:p-8">
+      <h1 className="mb-6 text-4xl font-semibold text-emerald-900">Admin Login</h1>
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
-          className="w-full border p-2 rounded"
+          className="w-full rounded-xl border px-3 py-2.5 focus:border-gold-500 focus:outline-none focus:ring-4 focus:ring-gold-300/30"
           type="email"
           placeholder="Email"
           autoComplete="username"
@@ -53,14 +53,14 @@ const LoginForm = ({ onLogin }) => {
           onChange={e => setLoginData({ ...loginData, email: e.target.value })}
         />
         <input
-          className="w-full border p-2 rounded"
+          className="w-full rounded-xl border px-3 py-2.5 focus:border-gold-500 focus:outline-none focus:ring-4 focus:ring-gold-300/30"
           type="password"
           placeholder="Password"
           autoComplete="current-password"
           required
           onChange={e => setLoginData({ ...loginData, password: e.target.value })}
         />
-        <Button type="submit" disabled={submitting} className="w-full bg-[#5a9b7f] text-white">
+        <Button type="submit" disabled={submitting} className="w-full rounded-full bg-emerald-800 text-ivory hover:bg-emerald-700">
           {submitting ? "Logging in..." : "Login"}
         </Button>
       </form>
@@ -75,8 +75,8 @@ const AdminHome = ({ onLogout }) => {
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border p-6 sm:p-8 w-full max-w-md">
-      <h1 className="text-2xl font-bold mb-1">Admin</h1>
+    <div className="w-full max-w-md rounded-3xl border bg-white p-6 shadow-xl sm:p-8">
+      <h1 className="mb-1 text-4xl font-semibold text-emerald-900">Admin</h1>
       <p className="text-gray-600 text-sm mb-6">Open a page to add or delete its photos.</p>
 
       <div className="space-y-2">
@@ -84,9 +84,9 @@ const AdminHome = ({ onLogout }) => {
           <Link
             key={to}
             to={to}
-            className="flex items-center gap-3 px-4 py-3 rounded-lg border text-sm font-medium hover:border-[#5a9b7f] hover:bg-[#5a9b7f]/5 transition"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg border text-sm font-medium hover:border-emerald-600 hover:bg-emerald-50 transition"
           >
-            <Icon size={18} className="text-[#5a9b7f]" />
+            <Icon size={18} className="text-emerald-600" />
             {label}
           </Link>
         ))}

@@ -1,92 +1,95 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import HeroSection from '@/components/HeroSection';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import PageHero from '@/components/PageHero';
 import SEO from '@/components/SEO';
+import CtaBand from '@/components/CtaBand';
+import Reveal from '@/components/motion/Reveal';
+import { SITE_URL } from '@/constants/data';
+
+const chapters = [
+  {
+    year: '1989',
+    title: 'Humble beginnings',
+    text: 'Rajasthan Tent House began with a simple yet ambitious vision: to redefine event management in Bhilwara. What started as a modest tent rental service evolved into one of Rajasthan’s most trusted wedding and event management companies.',
+    image: '/assets/photos10.jpg',
+  },
+  {
+    year: 'Growth',
+    title: 'More than chairs and tents',
+    text: 'Our founder understood that clients wanted more than chairs and tents. They wanted atmosphere, elegance, and emotion. That belief led us to specialize in wedding decoration, stage décor, lighting, and complete event planning across Rajasthan.',
+    image: '/assets/photos8.jpg',
+  },
+  {
+    year: 'Decades',
+    title: 'Thousands of celebrations',
+    text: 'Over the decades we have executed thousands of weddings, haldi ceremonies, ring ceremonies, birthdays, and corporate events. Each one sharpened our ability to deliver flawless setups under every condition.',
+    image: '/assets/photos6.jpg',
+  },
+  {
+    year: 'Today',
+    title: 'Tradition meets modern design',
+    text: 'Today Rajasthan Tent House is known across Bhilwara and Rajasthan for premium wedding decoration, royal mandap setups, DJ nights, and complete event management. We keep blending modern trends with Rajasthan’s timeless hospitality.',
+    image: '/assets/AI_01.png',
+  },
+];
+
+function Chapter({ chapter, index }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], ['-12%', '12%']);
+  const flip = index % 2 === 1;
+
+  return (
+    <div ref={ref} className="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+      <div className={`overflow-hidden rounded-4xl ${flip ? 'lg:order-2' : ''}`}>
+        <motion.img style={{ y, scale: 1.25 }} src={chapter.image} alt={chapter.title} loading="lazy" className="aspect-[4/3] w-full object-cover" />
+      </div>
+      <Reveal>
+        <p className="font-display text-7xl font-semibold leading-none text-gold-400/40 sm:text-8xl">{chapter.year}</p>
+        <h2 className="mt-2 text-4xl font-semibold text-emerald-900 sm:text-5xl">{chapter.title}</h2>
+        <p className="mt-5 text-lg leading-relaxed text-ink-soft">{chapter.text}</p>
+      </Reveal>
+    </div>
+  );
+}
 
 const OurStoryPage = () => {
   return (
-    <div className="min-h-screen bg-white">
-
+    <div className="overflow-x-clip">
       <SEO
-        title="Our Story – Rajasthan Tent House | Event Management in Bhilwara"
+        title="Our Story – Event Management in Bhilwara Since 1989"
         description="Discover the journey of Rajasthan Tent House, a trusted tent house and event management company in Bhilwara since 1989, crafting royal weddings and grand celebrations across Rajasthan."
-        url="https://rajasthantenthouse.com/our-story"
+        url={`${SITE_URL}/our-story`}
       />
 
-      <HeroSection
-        title="Our Story"
-        subtitle="From Humble Beginnings to Royal Celebrations"
+      <PageHero
+        eyebrow="Our story"
+        title="From humble beginnings to *royal celebrations*"
+        subtitle="A trusted event management company in Bhilwara since 1989."
         image="/assets/007-vmake.jpg"
+        crumbs={[{ label: 'Our Story' }]}
       />
 
-      <div className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto">
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#5a9b7f] text-center">
-              A Trusted Event Management Company in Bhilwara
-            </h2>
-
-            <div className="space-y-6 text-gray-600 text-lg leading-loose">
-              <p>
-                Rajasthan Tent House began in 1989 with a simple yet ambitious vision:
-                to redefine event management in Bhilwara. What started as a modest
-                tent rental service evolved into one of Rajasthan’s most trusted
-                wedding and event management companies.
-              </p>
-
-              <p>
-                Our founder understood that clients wanted more than chairs and tents —
-                they wanted atmosphere, elegance, and emotion. This belief led us to
-                specialize in wedding decoration, stage décor, lighting, and complete
-                event planning across Rajasthan.
-              </p>
-
-              <p>
-                Over the decades, we have executed thousands of weddings, haldi ceremonies,
-                ring ceremonies, birthdays, and corporate events. Each event sharpened our
-                ability to deliver flawless setups under every condition.
-              </p>
-
-              <div className="my-12 p-8 bg-[#5a9b7f]/10 rounded-2xl border-l-8 border-[#5a9b7f]">
-                <p className="text-xl font-medium text-gray-800 italic">
-                  “We don’t just plan events — we craft experiences that become lifelong memories.
-                  Every smile is our reward.”
-                </p>
-              </div>
-
-              <p>
-                Today, Rajasthan Tent House is known across Bhilwara and Rajasthan for
-                premium wedding decoration, royal mandap setups, DJ nights, and complete
-                event management. Our values remain unchanged: integrity, quality,
-                and a client-first mindset.
-              </p>
-
-              <p>
-                As we move forward, we continue blending modern trends with Rajasthan’s
-                timeless hospitality — ensuring every celebration feels extraordinary.
-              </p>
-            </div>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
-            {["001.jpg","003-vmake.jpg","005-vmake.jpg","006-vmake.jpg"].map((img, i) => (
-              <img
-                key={i}
-                src={`/assets/${img}`}
-                loading="lazy"
-                className="rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
-                alt={`Rajasthan Tent House Event Setup ${i + 1}`}
-              />
-            ))}
-          </div>
+      <section className="py-24 sm:py-32">
+        <div className="container space-y-24 sm:space-y-32">
+          {chapters.map((c, i) => (
+            <Chapter key={c.title} chapter={c} index={i} />
+          ))}
         </div>
-      </div>
+      </section>
+
+      <section className="grain relative overflow-hidden bg-emerald-950 py-24 sm:py-32">
+        <div className="pattern-jaali absolute inset-0 opacity-40" />
+        <Reveal className="container relative max-w-4xl text-center">
+          <span className="font-display text-8xl leading-none text-gold-400">“</span>
+          <blockquote className="-mt-6 font-display text-3xl font-medium italic leading-snug text-ivory sm:text-5xl">
+            We don’t just plan events. We craft experiences that become lifelong memories. Every smile is our reward.
+          </blockquote>
+          <p className="mt-8 text-xs font-semibold uppercase tracking-[0.3em] text-gold-300">The Rajasthan Tent House family</p>
+        </Reveal>
+      </section>
+
+      <CtaBand />
     </div>
   );
 };
