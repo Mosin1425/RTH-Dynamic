@@ -111,6 +111,10 @@ module.exports = {
 					'90%': { opacity: 1 },
 					'100%': { transform: 'translate3d(0,110vh,0) rotate(440deg)', opacity: 0 },
 				},
+				'tilt-rock': {
+					'0%, 100%': { transform: 'rotate(-18deg)' },
+					'50%': { transform: 'rotate(18deg)' },
+				},
 				bob: {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' },
